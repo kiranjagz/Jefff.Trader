@@ -14,5 +14,16 @@ namespace Jefff.Random.TriviaActor
         }
         public int Number { get; }
         public DateTime DateTimeCreated { get; } = DateTime.Now;
+
+        public class TimeTrigger
+        {
+            public DateTime TriggerTime { get; set; }
+            public TimeTrigger(DateTime triggerTime)
+            {
+                TriggerTime = triggerTime;
+            }
+        }
     }
+
+
 }
