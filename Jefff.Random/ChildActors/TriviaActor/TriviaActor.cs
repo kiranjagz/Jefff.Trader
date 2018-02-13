@@ -1,5 +1,7 @@
 ﻿using Akka.Actor;
+using Jefff.Random.Database.Mongo;
 using Jefff.Random.Model;
+using Jefff.Random.RestApi.RestActor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,14 +16,18 @@ namespace Jefff.Random.TriviaActor
     {
         private readonly IActorRef _restActor;
         private readonly IList _collection;
+        private readonly IMongoSetting _mongoSetting;
+        private readonly IMongoRepository _mongoRepository;
 
         public TriviaActor(IActorRef restActor)
         {
+            _mongoSetting = new MongoSetting();
+            _mongoRepository = new MongoRepository(_mongoSetting);
             _restActor = restActor;
             _collection = new List<int>();
             Receive<TrivaModel>(message => HandleMessage(message));
             Context.System.Scheduler.ScheduleTellRepeatedly(
-                TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(1), Self, new TrivaModel.TimeTrigger(DateTime.Now), ActorRefs.Nobody);
+                TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(2), Self, new TrivaModel.TimeTrigger(DateTime.Now), ActorRefs.Nobody);
 
             ReceiveAsync<TrivaModel.TimeTrigger>(HandleTimeTrigger);
         }
@@ -34,8 +40,8 @@ namespace Jefff.Random.TriviaActor
             foreach
                 (var item in _collection)
             {
-                var response =
-                    await _restActor.Ask<ResponseModel>(new RestApi.RestActor.RestRequestModel(Convert.ToInt32(item), "trivia"));
+                var response = await HandleApiCall(new RestRequestModel(Convert.ToInt32(item), "trivia"));
+                await _mongoRepository.Save(response);
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(response));
             }
 
@@ -46,13 +52,19 @@ namespace Jefff.Random.TriviaActor
             try
             {
                 _collection.Add(message.Number);
-                var response = await _restActor.Ask<ResponseModel>(new RestApi.RestActor.RestRequestModel(message.Number, "trivia"));
+                var response = await HandleApiCall(new RestRequestModel(message.Number, "trivia"));
+                await _mongoRepository.Save(response);
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(response));
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"{ex.Message}");
             }
+        }
+
+        private async Task<ResponseModel> HandleApiCall(RestRequestModel model)
+        {
+            return await _restActor.Ask<ResponseModel>(model, TimeSpan.FromSeconds(40));
         }
     }
 }
