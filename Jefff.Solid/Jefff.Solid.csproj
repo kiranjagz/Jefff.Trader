@@ -49,6 +49,9 @@
     <Compile Include="Database\IDatabase.cs" />
     <Compile Include="Database\MongoDatabase.cs" />
     <Compile Include="Database\SqlDatabase.cs" />
+    <Compile Include="Fruit\Apple.cs" />
+    <Compile Include="Fruit\Fruit.cs" />
+    <Compile Include="Fruit\Grape.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
