@@ -18,6 +18,13 @@ namespace Jefff.Random.Database.Mongo
             _mongoDatabase = _mongoClient.GetDatabase(_mongoSettings.Database);
         }
 
+        public async Task FindOneAndReplace(ResponseModel value)
+        {
+            var filter = Builders<ResponseModel>.Filter.Eq(x => x.Number, value.Number);
+            var findOne = _mongoDatabase.GetCollection<ResponseModel>(_mongoSettings.CollectionName);
+            await findOne.FindOneAndReplaceAsync<ResponseModel>(filter, value);
+        }
+
         public async Task Save(ResponseModel value)
         {
             try
