@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Jefff.Random.MathActor;
 using Jefff.Random.TriviaActor;
+using Akka.Routing;
 
 namespace Jefff.Random.MasterJediActor
 {
@@ -19,8 +20,16 @@ namespace Jefff.Random.MasterJediActor
         public MasterJediActor(IActorRef restActor)
         {
             _restActor = restActor;
-            _mathActor = Context.ActorOf(Props.Create(() => new MathActor.MathActor(_restActor)),"Jefff_Math");
-            _triviaActor = Context.ActorOf(Props.Create(() => new TriviaActor.TriviaActor(_restActor)),"Bobb_Triva");
+            _mathActor = Context.ActorOf(Props.Create(() => new MathActor.MathActor(_restActor))
+                .WithRouter(new ConsistentHashingPool(2).WithHashMapping(x =>
+                {
+                    if (x is ConsistentHashableEnvelope)
+                        return ((ConsistentHashableEnvelope)x).ConsistentHashKey;
+                    return x;
+                })), "Jeff_Math");
+
+
+            _triviaActor = Context.ActorOf(Props.Create(() => new TriviaActor.TriviaActor(_restActor)), "Bobb_Triva");
             Receive<MathModel>(message => HandleMathFact(message));
             Receive<TrivaModel>(message => HandleTrivaFact(message));
         }
@@ -32,7 +41,9 @@ namespace Jefff.Random.MasterJediActor
 
         private void HandleMathFact(MathModel message)
         {
-            _mathActor.Tell(message);
+            var math = new MathModel(message.Number);
+            var env = new ConsistentHashableEnvelope(message, message.Number);
+            _mathActor.Tell(env);
         }
 
         protected override void PreStart()

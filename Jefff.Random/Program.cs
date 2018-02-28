@@ -19,22 +19,18 @@ namespace Jefff.Random
             var randomSystem = ActorSystem.Create("RandomStuffActor");
             var restActor = randomSystem.ActorOf(Props.Create(() => new RestApi.RestActor.RestActor(_randomApi)));
             var masterJedi = randomSystem.ActorOf(Props.Create(() => new MasterJediActor.MasterJediActor(restActor)), "Obi-Wan");
-
-            for (int j = 1; j <= 10; j++)
+            while (true)
             {
-                //if (j % 2 == 0)
-                //{
-                //    var message = new MathActor.MathModel(j);
-                //    masterJedi.Tell(message);
-                //}
-                //else
-                //{
-                    var message = new TriviaActor.TrivaModel(j);
-                    masterJedi.Tell(message);
-                //}
+                var value = Console.ReadLine();
+                if (value.ToString() == string.Empty)
+                {
+                    value = "1";
+                }
+                var j = Convert.ToInt32(value);
+                Console.WriteLine($"J is a {j.GetType()} and value is: {j}");
+                var message = new MathActor.MathModel(j);
+                masterJedi.Tell(message);
             }
-
-            Console.Read();
         }
     }
 }

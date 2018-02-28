@@ -24,6 +24,9 @@ namespace Jefff.Random.MathActor
             {
                 var response = await _restActor.Ask<ResponseModel>(new RestApi.RestActor.RestRequestModel(message.Number, "math"));
                 Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(response));
+                Console.WriteLine($"Parent is: {Context.Parent.Path}");
+                Console.WriteLine($"Router is: {Context.Self.Path} ");
+                Console.WriteLine("--------------------------------");
             }
             catch (Exception ex)
             {

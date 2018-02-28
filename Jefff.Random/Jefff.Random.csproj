@@ -85,8 +85,8 @@
     <Compile Include="Database\Mongo\MongoRepository.cs" />
     <Compile Include="Database\Mongo\MongoSetting.cs" />
     <Compile Include="MasterJediActor\MasterJediActor.cs" />
-    <Compile Include="ChildActors\MathActor\MathActor.cs" />
-    <Compile Include="ChildActors\MathActor\MathModel.cs" />
+    <Compile Include="MasterJediActor\ChildActors\MathActor\MathActor.cs" />
+    <Compile Include="MasterJediActor\ChildActors\MathActor\MathModel.cs" />
     <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,8 +94,8 @@
     <Compile Include="RestApi\RestActor\BaseRequest.cs" />
     <Compile Include="RestApi\RestActor\RestActor.cs" />
     <Compile Include="RestApi\RestActor\RestRequestModel.cs" />
-    <Compile Include="ChildActors\TriviaActor\TrivaModel.cs" />
-    <Compile Include="ChildActors\TriviaActor\TriviaActor.cs" />
+    <Compile Include="MasterJediActor\ChildActors\TriviaActor\TrivaModel.cs" />
+    <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaActor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
