@@ -19,6 +19,7 @@ namespace Jefff.Random
             var randomSystem = ActorSystem.Create("RandomStuffActor");
             var restActor = randomSystem.ActorOf(Props.Create(() => new RestApi.RestActor.RestActor(_randomApi)));
             var masterJedi = randomSystem.ActorOf(Props.Create(() => new MasterJediActor.MasterJediActor(restActor)), "Obi-Wan");
+            Console.WriteLine("Enter a value to start, an integer is required!");
             while (true)
             {
                 var value = Console.ReadLine();
