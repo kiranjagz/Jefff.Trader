@@ -94,7 +94,7 @@
     <Compile Include="RestApi\RestActor\BaseRequest.cs" />
     <Compile Include="RestApi\RestActor\RestActor.cs" />
     <Compile Include="RestApi\RestActor\RestRequestModel.cs" />
-    <Compile Include="MasterJediActor\ChildActors\TriviaActor\TrivaModel.cs" />
+    <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaModel.cs" />
     <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaActor.cs" />
   </ItemGroup>
   <ItemGroup>

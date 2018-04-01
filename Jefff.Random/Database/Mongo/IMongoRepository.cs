@@ -7,6 +7,6 @@ namespace Jefff.Random.Database.Mongo
     {
         Task Save(ResponseModel value);
 
-        Task FindOneAndReplace(ResponseModel value);
+        Task<ResponseModel> FindOneAndReplace(ResponseModel value);
     }
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Jefff.Random
@@ -22,15 +23,22 @@ namespace Jefff.Random
             Console.WriteLine("Enter a value to start, an integer is required!");
             while (true)
             {
+
                 var value = Console.ReadLine();
                 if (value.ToString() == string.Empty)
-                {
                     value = "1";
-                }
+
                 var j = Convert.ToInt32(value);
-                Console.WriteLine($"J is a {j.GetType()} and value is: {j}");
-                var message = new MathActor.MathModel(j);
+                object message;
+                if (j % 2 == 0)
+                    message = new MathActor.MathModel(j);
+                else
+                    message = new TriviaActor.TriviaModel(j);
+                Console.WriteLine($"J is a {message.GetType()} and value is: {j}");
                 masterJedi.Tell(message);
+
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+                Console.WriteLine("Enter a value to continue, an integer is required!");
             }
         }
     }

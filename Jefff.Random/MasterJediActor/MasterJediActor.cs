@@ -29,12 +29,12 @@ namespace Jefff.Random.MasterJediActor
                 })), "Jeff_Math");
 
 
-            _triviaActor = Context.ActorOf(Props.Create(() => new TriviaActor.TriviaActor(_restActor)), "Bobb_Triva");
+            _triviaActor = Context.ActorOf(Props.Create(() => new ChildActors.TriviaActor.TriviaActor(_restActor)), "Bobb_Triva");
             Receive<MathModel>(message => HandleMathFact(message));
-            Receive<TrivaModel>(message => HandleTrivaFact(message));
+            Receive<TriviaModel>(message => HandleTrivaFact(message));
         }
 
-        private void HandleTrivaFact(TrivaModel message)
+        private void HandleTrivaFact(TriviaModel message)
         {
             _triviaActor.Tell(message);
         }

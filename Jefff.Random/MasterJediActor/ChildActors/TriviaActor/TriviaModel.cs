@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Jefff.Random.TriviaActor
 {
-    public class TrivaModel
+    public class TriviaModel
     {
-        public TrivaModel(int number)
+        public TriviaModel(int number)
         {
             Number = number;
         }
@@ -17,7 +17,7 @@ namespace Jefff.Random.TriviaActor
 
         public class TimeTrigger
         {
-            public DateTime TriggerTime { get; set; }
+            public DateTime TriggerTime { get; }
             public TimeTrigger(DateTime triggerTime)
             {
                 TriggerTime = triggerTime;
