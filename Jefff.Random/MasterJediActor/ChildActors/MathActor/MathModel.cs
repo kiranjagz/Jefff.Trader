@@ -11,18 +11,11 @@ namespace Jefff.Random.MathActor
     {
         public MathModel(int number)
         {
-            _number = number;
+            Number = number;
         }
-        readonly int _number;
-        public int Number { get { return _number; } }
+        public int Number { get; }
         public DateTime DateTimeCreated { get; } = DateTime.Now;
 
-        public object ConsistentHashKey
-        {
-            get
-            {
-                return _number;
-            }
-        }
+        public object ConsistentHashKey => Number;
     }
 }

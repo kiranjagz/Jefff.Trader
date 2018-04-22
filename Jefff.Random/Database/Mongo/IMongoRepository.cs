@@ -1,12 +1,13 @@
-﻿using Jefff.Random.Model;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Jefff.Random.Database.Mongo.Model;
+using Jefff.Random.RestApi.Model;
 
 namespace Jefff.Random.Database.Mongo
 {
     public interface IMongoRepository
     {
-        Task Save(ResponseModel value);
+        Task Save(RandomDatabaseModel value);
 
-        Task<ResponseModel> FindOneAndReplace(ResponseModel value);
+        Task<RandomDatabaseModel> FindOneAndReplace(RandomDatabaseModel value);
     }
 }

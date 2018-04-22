@@ -1,35 +1,31 @@
-﻿using Akka.Actor;
-using Jefff.Random.Database.Mongo;
-using Jefff.Random.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Akka.Actor;
+using Jefff.Random.MasterJediActor.ChildActors.MathActor.MathService;
+using Jefff.Random.MathActor;
+using Jefff.Random.RestApi;
+using Jefff.Random.RestApi.Model;
 
-namespace Jefff.Random.MathActor
+namespace Jefff.Random.MasterJediActor.ChildActors.MathActor
 {
     public class MathActor : ReceiveActor
     {
-        private readonly IActorRef _restActor;
-        //private readonly IMongoRepository _mongoRepository;
-        //private readonly IMongoSetting _mongoSetting;
+        private readonly IMathService _mathService;
 
-        public MathActor(IActorRef restActor)
+        public MathActor()
         {
-            //_mongoRepository = new MongoRepository(_mongoSetting);
-            _restActor = restActor;
-            ReceiveAsync<MathModel>(message => HandleMessage(message));
         }
 
-        private async Task HandleMessage(MathModel message)
+        public MathActor(IMathService mathService)
         {
-            var response = await _restActor.Ask<ResponseModel>(new RestApi.RestActor.RestRequestModel(message.Number, "math"));
-            //await _mongoRepository.Save(response);
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(response));
-            Console.WriteLine($"Parent is: {Context.Parent.Path}");
-            Console.WriteLine($"Router is: {Context.Self.Path} ");
-            Console.WriteLine("--------------------------------");
+            _mathService = mathService;
+            ReceiveAsync<MathModel>(HandleMessageAsync);
+        }
+
+        private async Task HandleMessageAsync(MathModel message)
+        {
+            await _mathService.DoApiWork(new RestRequestModel(message.Number, "math")).PipeTo(Sender, Self);
         }
     }
 }

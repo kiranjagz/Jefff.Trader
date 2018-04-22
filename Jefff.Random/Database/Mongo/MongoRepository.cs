@@ -1,38 +1,41 @@
-﻿using Jefff.Random.Model;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
+using Jefff.Random.Database.Mongo.Model;
+using Jefff.Random.Database.Mongo.Setting;
+using Jefff.Random.RestApi.Model;
 
 namespace Jefff.Random.Database.Mongo
 {
     public class MongoRepository : IMongoRepository
     {
-        private readonly MongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
-        private IMongoSetting _mongoSettings;
+        private readonly IMongoSetting _mongoSettings;
+        private readonly IMongoCollection<RandomDatabaseModel> _collection;
 
         public MongoRepository(IMongoSetting mongoSettings)
         {
             _mongoSettings = mongoSettings;
-            _mongoClient = new MongoClient(_mongoSettings.ConnectionString);
-            _mongoDatabase = _mongoClient.GetDatabase(_mongoSettings.Database);
+            var mongoClient = new MongoClient(_mongoSettings.ConnectionString);
+            _mongoDatabase = mongoClient.GetDatabase(_mongoSettings.Database);
+            _collection = _mongoDatabase.GetCollection<RandomDatabaseModel>(_mongoSettings.CollectionName);
+            _collection.Indexes.CreateOneAsync(Builders<RandomDatabaseModel>.IndexKeys.Ascending(x => x.DateCreated));
         }
 
-        public async Task<ResponseModel> FindOneAndReplace(ResponseModel value)
+        public async Task<RandomDatabaseModel> FindOneAndReplace(RandomDatabaseModel value)
         {
-            var filter = Builders<ResponseModel>.Filter.Eq(x => x.Number, value.Number);
-            var findOne = _mongoDatabase.GetCollection<ResponseModel>(_mongoSettings.CollectionName);
-            return await findOne.FindOneAndReplaceAsync(filter, value, new FindOneAndReplaceOptions<ResponseModel, ResponseModel> { IsUpsert = true, ReturnDocument = ReturnDocument.After });
+            var filter = Builders<RandomDatabaseModel>.Filter.Eq(x => x.Number, value.Number);
+            return await _collection
+                .FindOneAndReplaceAsync(filter,
+                    value, new FindOneAndReplaceOptions<RandomDatabaseModel, RandomDatabaseModel>
+                        { IsUpsert = true, ReturnDocument = ReturnDocument.After });
         }
 
-        public async Task Save(ResponseModel value)
+        public async Task Save(RandomDatabaseModel value)
         {
             try
             {
-                var index = _mongoDatabase.GetCollection<ResponseModel>(_mongoSettings.CollectionName).Indexes
-                    .CreateOneAsync(Builders<ResponseModel>.IndexKeys.Ascending(x => x.DateCreated));
-                var save = _mongoDatabase.GetCollection<ResponseModel>(_mongoSettings.CollectionName);
-                await save.InsertOneAsync(value);
+                await _collection.InsertOneAsync(value);
             }
             catch (Exception)
             {

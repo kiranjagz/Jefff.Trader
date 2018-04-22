@@ -9,11 +9,11 @@ namespace Jefff.Random.RestApi.RestActor
 {
     public class RestActor : ReceiveActor
     {
-        private RandomApi _randomApi;
+        private readonly RandomApi _randomApi;
 
         public RestActor(RandomApi randomApi)
         {
-            ReceiveAsync<RestRequestModel>(message => GetFacts(message));
+            ReceiveAsync<RestRequestModel>(GetFacts);
             _randomApi = randomApi;
         }
 

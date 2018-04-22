@@ -1,5 +1,4 @@
 ﻿using Akka.Actor;
-using Jefff.Random.Model;
 using Jefff.Random.RestApi;
 using Newtonsoft.Json;
 using System;
@@ -23,9 +22,8 @@ namespace Jefff.Random
             Console.WriteLine("Enter a value to start, an integer is required!");
             while (true)
             {
-
                 var value = Console.ReadLine();
-                if (value.ToString() == string.Empty)
+                if (value == string.Empty)
                     value = "1";
 
                 var j = Convert.ToInt32(value);
@@ -37,7 +35,6 @@ namespace Jefff.Random
                 Console.WriteLine($"J is a {message.GetType()} and value is: {j}");
                 masterJedi.Tell(message);
 
-                Thread.Sleep(TimeSpan.FromSeconds(5));
                 Console.WriteLine("Enter a value to continue, an integer is required!");
             }
         }

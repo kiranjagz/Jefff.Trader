@@ -1,17 +1,16 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace Jefff.Random.Model
+namespace Jefff.Random.Database.Mongo.Model
 {
-
-    public class ResponseModel
+    public class RandomDatabaseModel
     {
-        public ResponseModel()
+        public RandomDatabaseModel()
         {
             DateCreated = DateTime.Now;
         }
@@ -24,5 +23,4 @@ namespace Jefff.Random.Model
         public string Type { get; set; }
         public DateTime DateCreated { get; set; }
     }
-
 }
