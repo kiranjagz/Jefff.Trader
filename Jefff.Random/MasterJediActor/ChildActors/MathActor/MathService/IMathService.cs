@@ -11,6 +11,6 @@ namespace Jefff.Random.MasterJediActor.ChildActors.MathActor.MathService
 {
     public interface IMathService
     {
-        Task<ResponseModel> DoApiWork(RestRequestModel restRequestModel);
+        Task<MathResultModel> DoApiWork(RestRequestModel restRequestModel);
     }
 }

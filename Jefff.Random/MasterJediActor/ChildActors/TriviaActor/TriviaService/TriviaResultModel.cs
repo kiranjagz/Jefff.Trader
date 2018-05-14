@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jefff.Random.RestApi;
-using Jefff.Random.RestApi.Model;
 
 namespace Jefff.Random.MasterJediActor.ChildActors.TriviaActor.TriviaService
 {
-    public interface ITriviaService
+    public class TriviaResultModel
     {
-        Task<TriviaResultModel> DoApiWork(RestRequestModel restRequestModel);
+        public string Text { get; set; }
+        public int Number { get; set; }
+        public bool Found { get; set; }
+        public string Type { get; set; }
     }
 }

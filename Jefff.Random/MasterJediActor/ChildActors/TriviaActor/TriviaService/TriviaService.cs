@@ -16,9 +16,20 @@ namespace Jefff.Random.MasterJediActor.ChildActors.TriviaActor.TriviaService
         {
             _randomApi = randomApi;
         }
-        public async Task<ResponseModel> DoApiWork(RestRequestModel restRequestModel)
+        public async Task<TriviaResultModel> DoApiWork(RestRequestModel restRequestModel)
         {
-            return await _randomApi.FactGet(restRequestModel.Number, restRequestModel.Type);
+            var response = await _randomApi.FactGet(restRequestModel.Number, restRequestModel.Type);
+
+            if (response == null)
+                throw new Exception($"An error has occurred in the {typeof(TriviaService).Name}, response was null");
+
+            return new TriviaResultModel
+            {
+                Found = response.Found,
+                Number = response.Number,
+                Text = response.Text,
+                Type = response.Type
+            };
         }
     }
 }

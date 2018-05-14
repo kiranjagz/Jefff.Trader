@@ -88,8 +88,10 @@
     <Compile Include="Database\Mongo\MongoRepository.cs" />
     <Compile Include="Database\Mongo\Setting\MongoSetting.cs" />
     <Compile Include="MasterJediActor\ChildActors\MathActor\MathService\IMathService.cs" />
+    <Compile Include="MasterJediActor\ChildActors\MathActor\MathService\MathResultModel.cs" />
     <Compile Include="MasterJediActor\ChildActors\MathActor\MathService\MathService.cs" />
     <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaService\ITriviaService.cs" />
+    <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaService\TriviaResultModel.cs" />
     <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaService\TriviaService.cs" />
     <Compile Include="MasterJediActor\MasterJediActor.cs" />
     <Compile Include="MasterJediActor\ChildActors\MathActor\MathActor.cs" />
@@ -100,7 +102,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestApi\RandomApi.cs" />
     <Compile Include="RestApi\BaseRequest.cs" />
-    <Compile Include="RestApi\RestActor\RestActor.cs" />
     <Compile Include="RestApi\Model\RestRequestModel.cs" />
     <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaModel.cs" />
     <Compile Include="MasterJediActor\ChildActors\TriviaActor\TriviaActor.cs" />

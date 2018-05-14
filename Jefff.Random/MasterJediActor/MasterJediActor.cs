@@ -8,6 +8,9 @@ using Jefff.Random.MathActor;
 using Jefff.Random.TriviaActor;
 using Akka.Routing;
 using Jefff.Random.RestApi.Model;
+using Jefff.Random.MasterJediActor.ChildActors.MathActor.MathService;
+using Jefff.Random.MasterJediActor.ChildActors.TriviaActor.TriviaService;
+using Jefff.Random.RestApi;
 
 namespace Jefff.Random.MasterJediActor
 {
@@ -15,12 +18,12 @@ namespace Jefff.Random.MasterJediActor
     {
         private readonly IActorRef _mathActor;
         private readonly IActorRef _triviaActor;
-        private readonly IActorRef _restActor;
+        private readonly IRandomApi _randomApi;
 
-        public MasterJediActor(IActorRef restActor)
+        public MasterJediActor()
         {
-            _restActor = restActor;
-            _mathActor = Context.ActorOf(Props.Create(() => new ChildActors.MathActor.MathActor())
+            _randomApi = new RandomApi();
+            _mathActor = Context.ActorOf(Props.Create(() => new ChildActors.MathActor.MathActor(new MathService(_randomApi)))
                 .WithRouter(new ConsistentHashingPool(2).WithHashMapping(x =>
                 {
                     if (x is ConsistentHashableEnvelope envelope)
@@ -28,16 +31,26 @@ namespace Jefff.Random.MasterJediActor
                     return x;
                 })), "Jeff_Math");
 
-
-            _triviaActor = Context.ActorOf(Props.Create(() => new ChildActors.TriviaActor.TriviaActor(_restActor)), "Bobb_Triva");
+            _triviaActor = Context.ActorOf(Props.Create(() => new ChildActors.TriviaActor.TriviaActor(new TriviaService(_randomApi))), "Bobb_Triva");
             Receive<MathModel>(message => HandleMathFact(message));
             Receive<TriviaModel>(message => HandleTrivaFact(message));
-            Receive<ResponseModel>(r => HandleResponse(r));
+
+            //Handles messages from child actors...
+            Receive<TriviaResultModel>(r => HandleTriviaResult(r));
+            Receive<MathResultModel>(r => HandleMathResult(r));
         }
 
-        private static void HandleResponse(ResponseModel responseModel)
+        private void HandleMathResult(MathResultModel r)
         {
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(responseModel));
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(r));
+            Console.WriteLine($"Parent is: {Context.Self}");
+            Console.WriteLine($"Child is: {Context.Sender.Path}");
+            Console.WriteLine($"Work it has, done well you have!");
+        }
+
+        private void HandleTriviaResult(TriviaResultModel r)
+        {
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(r));
             Console.WriteLine($"Parent is: {Context.Self}");
             Console.WriteLine($"Child is: {Context.Sender.Path}");
             Console.WriteLine($"Work it has, done well you have!");

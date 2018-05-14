@@ -17,11 +17,12 @@ namespace Jefff.Random
         {
             RandomApi _randomApi = new RandomApi();
             var randomSystem = ActorSystem.Create("RandomStuffActor");
-            var restActor = randomSystem.ActorOf(Props.Create(() => new RestApi.RestActor.RestActor(_randomApi)));
-            var masterJedi = randomSystem.ActorOf(Props.Create(() => new MasterJediActor.MasterJediActor(restActor)), "Obi-Wan");
-            Console.WriteLine("Enter a value to start, an integer is required!");
+
+            var masterJedi = randomSystem.ActorOf(Props.Create(() => new MasterJediActor.MasterJediActor()), "Obi-Wan");
+
             while (true)
             {
+                Console.WriteLine("Enter a value to start, an integer is required!");
                 var value = Console.ReadLine();
                 if (value == string.Empty)
                     value = "1";
@@ -35,7 +36,8 @@ namespace Jefff.Random
                 Console.WriteLine($"J is a {message.GetType()} and value is: {j}");
                 masterJedi.Tell(message);
 
-                Console.WriteLine("Enter a value to continue, an integer is required!");
+                Console.WriteLine("Sleeping for 10 seconds then continue :)");
+                Thread.Sleep(TimeSpan.FromSeconds(10));
             }
         }
     }

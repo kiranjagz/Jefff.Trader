@@ -14,13 +14,21 @@ namespace Jefff.Random.MasterJediActor.ChildActors.MathActor.MathService
     {
         private readonly IRandomApi _randomApi;
 
-        public MathService( IRandomApi randomApi)
+        public MathService(IRandomApi randomApi)
         {
             _randomApi = randomApi;
         }
-        public async Task<ResponseModel> DoApiWork(RestRequestModel restRequestModel)
+        public async Task<MathResultModel> DoApiWork(RestRequestModel restRequestModel)
         {
-            return await _randomApi.FactGet(restRequestModel.Number, restRequestModel.Type);
+            var response = await _randomApi.FactGet(restRequestModel.Number, restRequestModel.Type);
+
+            return new MathResultModel
+            {
+                Found = response.Found,
+                Number = response.Number,
+                Text = response.Text,
+                Type = response.Type
+            };
         }
     }
 }

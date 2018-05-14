@@ -2,27 +2,33 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Akka.Actor;
-using Jefff.Random.Database.Mongo;
-using Jefff.Random.Database.Mongo.Setting;
+using Jefff.Random.MasterJediActor.ChildActors.TriviaActor.TriviaService;
 using Jefff.Random.RestApi;
-using Jefff.Random.RestApi.Model;
-using Jefff.Random.RestApi.RestActor;
 using Jefff.Random.TriviaActor;
 
 namespace Jefff.Random.MasterJediActor.ChildActors.TriviaActor
 {
     public class TriviaActor : ReceiveActor
     {
-        private readonly ICollection<int> _collection;
+        private static readonly ICollection<int> _collection;
+        private readonly ITriviaService _triviaService;
 
-        public TriviaActor(IActorRef restActor)
+        static TriviaActor()
         {
-            _collection = new HashSet<int>();
-            ReceiveAsync<TriviaModel>(HandleMessage);
-            Context.System.Scheduler.ScheduleTellRepeatedly(
-                TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(1), Self, new TriviaModel.TimeTrigger(DateTime.Now), ActorRefs.Nobody);
+            _collection = new List<int>();
+        }
 
-            ReceiveAsync<TriviaModel.TimeTrigger>(HandleTimeTrigger);
+        public TriviaActor(ITriviaService triviaService)
+        {
+            _triviaService = triviaService;
+
+            ReceiveAsync<TriviaModel>(HandleMessageAsync);
+            Receive<TriviaModel.TimeTrigger>(x => HandleTimeTrigger(x));
+
+            Context.System.Scheduler.ScheduleTellRepeatedly(
+              TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(1),
+              Self,
+              new TriviaModel.TimeTrigger(DateTime.Now), ActorRefs.Nobody);
         }
 
         private void HandleTimeTrigger(TriviaModel.TimeTrigger trigger)
@@ -34,14 +40,15 @@ namespace Jefff.Random.MasterJediActor.ChildActors.TriviaActor
             foreach
                 (var item in _collection)
             {
+                Console.WriteLine($"Number was used: {item}");
             }
-
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
-        private async Task HandleMessage(TriviaModel message)
+        private async Task HandleMessageAsync(TriviaModel message)
         {
             _collection.Add(message.Number);
-
+            await _triviaService.DoApiWork(new RestRequestModel(message.Number, "trivia")).PipeTo(Sender, Self);
         }
     }
 }

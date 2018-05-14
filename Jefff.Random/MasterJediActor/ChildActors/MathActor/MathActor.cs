@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Akka.Actor;
+using Akka.Routing;
 using Jefff.Random.MasterJediActor.ChildActors.MathActor.MathService;
 using Jefff.Random.MathActor;
 using Jefff.Random.RestApi;
@@ -13,14 +14,18 @@ namespace Jefff.Random.MasterJediActor.ChildActors.MathActor
     {
         private readonly IMathService _mathService;
 
-        public MathActor()
-        {
-        }
-
         public MathActor(IMathService mathService)
         {
             _mathService = mathService;
             ReceiveAsync<MathModel>(HandleMessageAsync);
+            ReceiveAsync<ConsistentHashableEnvelope>(HandleMessageWithHashAsync);
+        }
+
+        private async Task HandleMessageWithHashAsync(ConsistentHashableEnvelope arg)
+        {
+            var message = arg.Message as MathModel;
+
+            await _mathService.DoApiWork(new RestRequestModel(message.Number, "math")).PipeTo(Sender, Self);
         }
 
         private async Task HandleMessageAsync(MathModel message)
