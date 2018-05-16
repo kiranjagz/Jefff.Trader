@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jefff.Trading.System", "Jefff.Trading.System\Jefff.Trading.System.csproj", "{BA50807B-C06C-495D-9036-7F98F8853D44}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Jefff.Py", "Jefff.Py\Jefff.Py.pyproj", "{650FE653-40AF-4620-9068-0CB89D168A09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jefff.Solid", "Jefff.Solid\Jefff.Solid.csproj", "{94AAC1EE-2920-42AD-BBB4-EE1A0892D311}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jefff.Own.Random", "Jefff.Own.Random\Jefff.Own.Random.csproj", "{5B0087EF-A442-4617-95E9-EB5B671ED98C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,8 +33,15 @@ Global
 		{94AAC1EE-2920-42AD-BBB4-EE1A0892D311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94AAC1EE-2920-42AD-BBB4-EE1A0892D311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94AAC1EE-2920-42AD-BBB4-EE1A0892D311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63E092B3-A0CA-462E-B8F7-21C94B5069B9}
 	EndGlobalSection
 EndGlobal
