@@ -15,7 +15,7 @@ namespace Jefff.Own.Random
         {
             var seededData = SeedEngine.SeedData();
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Console.WriteLine($"====================");
 
@@ -34,22 +34,23 @@ namespace Jefff.Own.Random
                     var a = new RangeSelector { Start = start, End = end };
 
                     randomEngine.Add(item.Key, a);
-                    startIndex = end++;
+                    startIndex = end + 1;
                 }
 
                 Console.WriteLine($"Random Engine produced: {Newtonsoft.Json.JsonConvert.SerializeObject(randomEngine, Formatting.Indented)}");
-                var endIndex = startIndex;
-                Console.WriteLine($"Last index range: {endIndex}");
+                var totalWeight = startIndex;
+                Console.WriteLine($"Total Weight: {totalWeight}");
                 System.Random random = new System.Random(DateTime.Now.Millisecond);
-                var generateARandomNumber = random.Next(1, endIndex);
-                Console.WriteLine($"Random calculation for engine to compute: {generateARandomNumber}");
+                var generateARandomNumber = random.Next(1, totalWeight);
+                var trueRandom = TrueRandom(1, totalWeight);
+                Console.WriteLine($"Random calculation for engine to compute: {trueRandom}");
 
                 string key = string.Empty;
                 foreach (var item in randomEngine)
                 {
                     key = item.Key;
                     var value = item.Value;
-                    var inRange = (value.Start <= generateARandomNumber && value.End >= generateARandomNumber);
+                    var inRange = (value.Start <= trueRandom && value.End >= trueRandom);
                     if (inRange)
                         break;
                 }
@@ -60,14 +61,27 @@ namespace Jefff.Own.Random
             Console.Read();
         }
 
-        private int TrueRandom()
+        private static int TrueRandom(int minValue, int maxValue)
         {
-            using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
+            using (RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider())
             {
-                byte[] rno = new byte[5];
-                rg.GetBytes(rno);
-                int randomvalue = BitConverter.ToInt32(rno, 0);
-                return randomvalue;
+                var _uint32Buffer = new byte[4];
+                if (minValue > maxValue) throw new ArgumentOutOfRangeException("The min value is larger than the max!");
+                if (minValue == maxValue) return minValue;
+                var diff = maxValue - minValue;
+
+                while (true)
+                {
+                    provider.GetBytes(_uint32Buffer);
+                    var random = BitConverter.ToUInt32(_uint32Buffer, 0);
+                    var max = (1 + (Int64)UInt32.MaxValue);
+                    var remainder = max % diff;
+
+                    if (random < max - remainder)
+                    {
+                        return (Int32)(minValue + (random % diff));
+                    }
+                }
             }
         }
 
