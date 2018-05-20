@@ -23,6 +23,17 @@ namespace Jefff.Random.TriviaActor
                 TriggerTime = triggerTime;
             }
         }
+
+        public class TimeTriggerOnce
+        {
+            public DateTime TriggerTime { get; }
+            public string Message { get; }
+            public TimeTriggerOnce(DateTime triggerTime, string message)
+            {
+                TriggerTime = triggerTime;
+                Message = message;
+            }
+        }
     }
 
 

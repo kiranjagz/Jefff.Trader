@@ -21,16 +21,16 @@ namespace Jefff.Own.Random
 
                 var randomEngine = new Dictionary<string, RangeSelector>();
                 System.Random r = new System.Random(DateTime.Now.Second);
-                seededData = seededData.OrderBy(x => r.Next(0, seededData.Count)).ToDictionary(item => item.Key, item => item.Value);
+                seededData = seededData.OrderBy(x => TrueRandom(0, seededData.Count)).ToDictionary(item => item.Key, item => item.Value);
                 Console.WriteLine($"Seeed data: {Newtonsoft.Json.JsonConvert.SerializeObject(seededData, Formatting.Indented)}");
 
-                int startIndex = 1;
+                int startIndex = 0;
 
                 foreach (var item in seededData)
                 {
                     var chance = item.Value;
                     var start = startIndex;
-                    var end = startIndex + chance;
+                    var end = startIndex + chance - 1;
                     var a = new RangeSelector { Start = start, End = end };
 
                     randomEngine.Add(item.Key, a);
@@ -41,8 +41,8 @@ namespace Jefff.Own.Random
                 var totalWeight = startIndex;
                 Console.WriteLine($"Total Weight: {totalWeight}");
                 System.Random random = new System.Random(DateTime.Now.Millisecond);
-                var generateARandomNumber = random.Next(1, totalWeight);
-                var trueRandom = TrueRandom(1, totalWeight);
+                var generateARandomNumber = random.Next(0, totalWeight - 1);
+                var trueRandom = TrueRandom(0, totalWeight - 1);
                 Console.WriteLine($"Random calculation for engine to compute: {trueRandom}");
 
                 string key = string.Empty;
