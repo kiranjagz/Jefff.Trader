@@ -20,5 +20,34 @@ namespace Jefff.Own.Random.Seed
 
             return seededData;
         }
+
+        public static Dictionary<int, int> SeedWedges()
+        {
+            var seededData = new Dictionary<int, int>();
+
+            seededData.Add(1, 27);
+            seededData.Add(2, 24);
+            seededData.Add(3, 20);
+            seededData.Add(4, 17);
+            seededData.Add(5, 12);
+
+            return seededData;
+        }
+
+        public static Dictionary<string, int> SeedRewardTypes()
+        {
+            var seededData = new Dictionary<string, int>();
+
+            seededData.Add("FreeBonus", 1);
+            seededData.Add("FreeCash", 1);
+            seededData.Add("FreeSpins", 1);
+            seededData.Add("LoyaltyPoints", 1);
+            seededData.Add("Boost", 1);
+            seededData.Add("TimerReduction", 2);
+            seededData.Add("SpinAgain", 2);
+            seededData.Add("NoReward", 2);
+
+            return seededData;
+        }
     }
 }
