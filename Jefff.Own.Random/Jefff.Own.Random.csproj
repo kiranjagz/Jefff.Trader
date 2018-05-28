@@ -47,6 +47,14 @@
   <ItemGroup>
     <Compile Include="Extensions\TrueRandomStuff.cs" />
     <Compile Include="JagFormula\JagFormula.cs" />
+    <Compile Include="NewFormula\IReward.cs" />
+    <Compile Include="NewFormula\IWedgeCalculation.cs" />
+    <Compile Include="NewFormula\IWedgePlacement.cs" />
+    <Compile Include="NewFormula\Reward.cs" />
+    <Compile Include="NewFormula\Wedge.cs" />
+    <Compile Include="NewFormula\WedgeCalculation.cs" />
+    <Compile Include="NewFormula\WedgePlacement.cs" />
+    <Compile Include="NewFormula\WedgeWithRange.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seed\SeedEngine.cs" />
@@ -55,8 +63,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFormula\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -34,6 +34,19 @@ namespace Jefff.Own.Random.Seed
             return seededData;
         }
 
+        public static Dictionary<int, Pot> SeedPot()
+        {
+            var seededData = new Dictionary<int, Pot>();
+
+            seededData.Add(1, new Pot { Probability = 27, Slope = 0.64m });
+            seededData.Add(2, new Pot { Probability = 24, Slope = 0.81m });
+            seededData.Add(3, new Pot { Probability = 20, Slope = 1.02m });
+            seededData.Add(4, new Pot { Probability = 17, Slope = 1.24m });
+            seededData.Add(5, new Pot { Probability = 12, Slope = 1.60m });
+
+            return seededData;
+        }
+
         public static Dictionary<string, int> SeedRewardTypes()
         {
             var seededData = new Dictionary<string, int>();
@@ -48,6 +61,12 @@ namespace Jefff.Own.Random.Seed
             seededData.Add("NoReward", 2);
 
             return seededData;
+        }
+
+        public class Pot
+        {
+            public double Probability { get; set; }
+            public decimal Slope { get; set; }
         }
     }
 }
