@@ -60,7 +60,7 @@ namespace Jefff.Random.MasterJediActor.ChildActors.TriviaActor
             //_collection.Add(message.Number);
             Context.System.Scheduler.ScheduleTellOnce(TimeSpan.FromSeconds(60), Self, new TriviaModel.TimeTriggerOnce(DateTime.Now, message.Number.ToString()), ActorRefs.Nobody);
 
-            await _triviaService.DoApiWork(new RestRequestModel(message.Number, "trivia")).PipeTo(Sender, Self);
+            await _triviaService.DoApiWork(new RestRequestModel(message.Number, "trivia")).PipeTo(Sender);
         }
     }
 }

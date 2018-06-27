@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jefff.Solid", "Jefff.Solid\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jefff.Own.Random", "Jefff.Own.Random\Jefff.Own.Random.csproj", "{5B0087EF-A442-4617-95E9-EB5B671ED98C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jefff.JTwoC", "Jefff.JTwoC\Jefff.JTwoC.csproj", "{057B61FB-C445-43E2-AC60-CEB3140890AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B0087EF-A442-4617-95E9-EB5B671ED98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{057B61FB-C445-43E2-AC60-CEB3140890AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{057B61FB-C445-43E2-AC60-CEB3140890AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{057B61FB-C445-43E2-AC60-CEB3140890AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{057B61FB-C445-43E2-AC60-CEB3140890AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

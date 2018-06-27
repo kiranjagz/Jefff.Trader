@@ -29,7 +29,7 @@ namespace Jefff.Random.MasterJediActor
                     if (x is ConsistentHashableEnvelope envelope)
                         return envelope.ConsistentHashKey;
                     return x;
-                })), "Jeff_Math");
+                })), "Jefff_Math");
 
             _triviaActor = Context.ActorOf(Props.Create(() => new ChildActors.TriviaActor.TriviaActor(new TriviaService(_randomApi))), "Bobb_Triva");
             Receive<MathModel>(message => HandleMathFact(message));
@@ -58,7 +58,7 @@ namespace Jefff.Random.MasterJediActor
 
         private void HandleTrivaFact(TriviaModel message)
         {
-            _triviaActor.Tell(message);
+            _triviaActor.Tell(message,);
         }
 
         private void HandleMathFact(MathModel message)
