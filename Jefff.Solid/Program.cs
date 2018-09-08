@@ -16,6 +16,11 @@ namespace Jefff.Solid
 
         static void Main(string[] args)
         {
+            var time = TimeSpan.FromHours(0.02);
+            var time2 = TimeSpan.FromHours(0.5);
+            var add = DateTime.Now.Add(time);
+            var add2 = DateTime.Now.Add(time2);
+
             _fruit.Add(new Apple());
             _fruit.Add(new Grape());
 
