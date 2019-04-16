@@ -42,6 +42,10 @@ namespace Jefff.Solid
                 Console.WriteLine(concat);
             });
 
+   
+
+            
+
             Console.Read();
         }
     }

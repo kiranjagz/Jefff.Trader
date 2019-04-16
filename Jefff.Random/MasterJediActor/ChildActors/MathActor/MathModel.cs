@@ -17,10 +17,5 @@ namespace Jefff.Random.MathActor
         public DateTime DateTimeCreated { get; } = DateTime.Now;
 
         public object ConsistentHashKey => Number;
-
-        public static explicit operator MathModel(ConsistentHashableEnvelope v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

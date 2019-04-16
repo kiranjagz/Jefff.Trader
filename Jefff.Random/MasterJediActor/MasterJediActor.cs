@@ -58,7 +58,7 @@ namespace Jefff.Random.MasterJediActor
 
         private void HandleTrivaFact(TriviaModel message)
         {
-            _triviaActor.Tell(message,);
+            _triviaActor.Tell(message);
         }
 
         private void HandleMathFact(MathModel message)

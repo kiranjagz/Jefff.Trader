@@ -26,11 +26,6 @@ namespace Jefff.Random.MasterJediActor.ChildActors.TriviaActor
             Receive<TriviaModel.TimeTrigger>(x => HandleTimeTrigger(x));
             Receive<TriviaModel.TimeTriggerOnce>(x => HandleTimeTriggerOnce(x));
 
-            Context.System.Scheduler.ScheduleTellRepeatedly(
-              TimeSpan.FromSeconds(30), TimeSpan.FromMinutes(1),
-              Self,
-              new TriviaModel.TimeTrigger(DateTime.Now), ActorRefs.Nobody);
-
 
         }
 
