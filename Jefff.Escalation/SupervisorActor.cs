@@ -42,11 +42,11 @@ namespace Jefff.Escalation
 
         protected override void OnReceive(object message)
         {
-            //if (message is Props p)
-            //{
-            //    var child = Context.ActorOf(p); // create child
-            //    Sender.Tell(child); // send back reference to child actor
-            //}
+            if (message is Props p)
+            {
+                var child = Context.ActorOf(p); // create child
+                Sender.Tell(child); // send back reference to child actor
+            }
 
             cOne.Tell(message);
             cTwo.Tell(new NullReferenceException());
